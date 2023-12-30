@@ -1,0 +1,58 @@
+var Datatable
+$(document).ready(function () {
+    loadDataTable();
+})
+function loadDataTable() {
+    datatable = $('#tblData').DataTable({
+        "ajax": { url: '/admin/product/getall' },
+        "columns": [
+            { data: 'title', "width": "15%" },
+            { data: 'isbn', "width": "15%" },
+            { data: 'price', "width": "10%" },
+            { data: 'author', "width": "15%" },
+            { data: 'description', "width": "20%" },
+            {
+                data: 'id',
+                "render": function (data) {
+                    return `<div class="w-75 btn-group" role="group">
+                    <a href="/admin/product/upsert/?id=${data}" class="btn btn-primary mx-2"><i class="bi-pencil-square"></i> Edit</a>
+                    <a OnClick=Delete('/admin/product/delete/?id=${data}') class="btn btn-danger mx-2"><i class="bi-trash-fill"></i> Delete</a>
+                    </div>`
+                },
+                "width": "35%",
+            }
+        ]
+    });
+}
+const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+    },
+    buttonsStyling: false
+});
+
+function Delete(url) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                url: url,
+                type: "DELETE",
+                success: function (data) {
+                    datatable.ajax.reload
+                    toastr.success(data.message)
+                }
+            });
+        }
+    });
+}
+
+

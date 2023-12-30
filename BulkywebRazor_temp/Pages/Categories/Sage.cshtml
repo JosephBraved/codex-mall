@@ -1,0 +1,29 @@
+﻿@page
+@model BulkywebRazor_temp.Pages.Categories.SageModel
+
+<form method="post">
+	
+		<div class="row pb-2">
+			<h2 class="text-primary"> Create Category</h2>
+			<hr />
+			<div class="mb-3">
+				<label asp-for="SingleCategory.Name" class="p-0"></label>
+				<input asp-for="SingleCategory.Name" class="form-control" />
+				<span asp-validation-for="SingleCategory.Name" class="text-danger"></span>
+			</div>
+			<div class="mb-3">
+				<div class="mb-3">
+					<label asp-for="SingleCategory.DisplayOrder" class="p-0"></label>
+					<input asp-for="SingleCategory.DisplayOrder" class="form-control" />
+					<span asp-validation-for="SingleCategory.DisplayOrder" class="text-danger"></span>
+				</div>
+				<button type="submit" class="btn btn-primary" style="width:150px;">Create</button>
+				<a asp-page="/Categories/Index" class="btn btn-secondary"> Back </a>
+			</div>
+		</div>
+</form>
+@section Scripts{
+	@{
+	<partial name="_ValidationScriptsPartial" />
+	}
+}
