@@ -1,4 +1,5 @@
 ﻿using Bulky.Models.Models;
+using Bulky.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,8 @@ namespace BulkyDataAccess.Data
 		}
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Product> Products { get; set; }
+
+		public DbSet<ApplicationUser> ApplicationUsers {  get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 			base.OnModelCreating(modelBuilder);
