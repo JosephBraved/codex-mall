@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Company\Create.cshtml" />
     <Content Remove="Areas\Admin\Views\Product\Create.cshtml" />
     <Content Remove="Areas\Admin\Views\Category\Create.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Areas\Admin\Views\Company\Create.cshtml" />
     <Compile Include="Areas\Admin\Views\Product\Create.cshtml" />
     <Compile Include="Areas\Admin\Views\Category\Create.cshtml" />
   </ItemGroup>
