@@ -9,7 +9,8 @@ namespace Bulky.Models.Models
 {
     public class Company
     {
-        [Key] public int Id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         [Required] public string Name { get; set; }
         public string? StreetAddress { get; set; }

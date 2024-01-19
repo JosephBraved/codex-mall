@@ -26,38 +26,59 @@ namespace Bulky.DataAccess.Repository
 			
 		}
 
-		public T Get(Expression<Func<T, bool>> filter, string? includeproperties = null)
+		public T Get(Expression<Func<T, bool>> filter, string? includeproperties = null, bool tracked = false)
 		{
-			IQueryable<T> query = dbSet;
-			query = query.Where(filter);
-			if (!string.IsNullOrEmpty(includeproperties))
-			{
-				foreach (var includeprop in includeproperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-				{
-					query.Include(includeprop);
-				}
+			if (tracked) {
+                IQueryable<T> query = dbSet;
+                query = query.Where(filter);
+                if (!string.IsNullOrEmpty(includeproperties))
+                {
+                    foreach (var includeprop in includeproperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query.Include(includeprop);
+                    }
 
-			}
-			return query.FirstOrDefault();
+                }
+                return query.FirstOrDefault();
+            }
+			else
+			{
+                IQueryable<T> query = dbSet.AsNoTracking();
+                query = query.Where(filter);
+                if (!string.IsNullOrEmpty(includeproperties))
+                {
+                    foreach (var includeprop in includeproperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query.Include(includeprop);
+                    }
+
+                }
+                return query.FirstOrDefault();
+            }
+			
 			
 		}
 
-		public IEnumerable<T> GetAll(string? includeproperties = null)
-		{
-			
-			IQueryable<T> query = dbSet;
-			if (!string.IsNullOrEmpty(includeproperties))
-			{
-				foreach (var includeprop in includeproperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-				{
-					query.Include(includeprop);
-					
-				}
-				
-			}
-			return query.ToList();
-		}
-		public void Remove(T entity)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeproperties = null)
+        {
+            IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (!string.IsNullOrEmpty(includeproperties))
+            {
+                foreach (var includeprop in includeproperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeprop);
+                }
+            }
+
+            return query.ToList();
+        }
+
+        public void Remove(T entity)
 		{
 			dbSet.Add(entity);
 		}

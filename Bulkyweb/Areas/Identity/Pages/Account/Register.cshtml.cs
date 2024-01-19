@@ -172,6 +172,10 @@ namespace Bulkyweb.Areas.Identity.Pages.Account
                 {
                     user.CompanyId = Input.CompanyId;
                 }
+                else
+                {
+                    user.CompanyId = null;
+                }
                 
                 
 
